@@ -8,13 +8,31 @@ authors = [
 ]
 requires-python = ">=3.13.3"
 dependencies = [
+    "asyncpg>=0.31.0",
     "fastapi[standard]>=0.141.1",
     "pydantic-settings>=2.15.0",
+    "sqlalchemy[asyncio]>=2.1.1",
 ]
-
-[project.scripts]
-sales-agent = "sales_agent:main"
 
 [build-system]
 requires = ["uv_build>=0.12.17,<0.13.0"]
 build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "app"
+module-root = ""
+
+[tool.ruff]
+line-length = 88
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["fastapi.Depends", "fastapi.params.Depends"]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.16.9",
+]
